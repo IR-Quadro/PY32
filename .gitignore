@@ -1,0 +1,47 @@
+# Build output
+*.axf
+*.elf
+*.hex
+*.bin
+*.lst
+*.map
+*.sct
+*.o
+*.obj
+*.crf
+*.htm
+*.html
+*.log
+
+# Keil-specific intermediate files
+*.d
+*.dep
+*.bak
+*.uvguix.*
+*.uvoptx
+*.uvgui.*
+*.uvopt
+*.uvproj
+*.uvprojx.bak
+*.uvoptx.bak
+*.scvd
+
+# Listings, Debug, and other outputs
+Objects/
+Listings/
+DebugConfig/
+
+# Temporary system files
+Thumbs.db
+.DS_Store
+*.swp
+*.user
+*.workspace
+*.idea
+*.vscode
+
+# Optional: ignore any generated folder if you have simulation or Proteus files
+*.pdsprj
+*.pdsbak
+*.dsn
+*.ddb
