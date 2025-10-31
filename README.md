@@ -66,16 +66,201 @@ Ensure your setup supports 1.7–5.5 V operation and provides stable power (VDD/
 ---
 
 ## 🔨 General Build & Flash Instructions
-1. Open the project file (`.uvprojx`) in Keil µVision 5.
-2. Navigate to **Project → Options for Target…**:
-   - In the **Linker** tab, enable **"Use Memory Layout from Target Dialog"** to match the PY32F002Axx memory map.
-3. Build the project (F7 or **Project → Build Target**).
-4. Flash via debugger: Connect your SWD tool, select the target device, and program the generated `.hex` or `.bin` file.
 
-For CMSIS device headers, include the Puya-provided pack (download from py32.org if needed).
+### 🧱 Building and Flashing from Keil µVision
+
+1. **Open the project file** (`.uvprojx`) in **Keil µVision 5**.  
+2. Go to **Project → Options for Target…**  
+   - Under the **Linker** tab, enable **"Use Memory Layout from Target Dialog"** to ensure the memory configuration matches the **PY32F002Axx** series.  
+3. **Build the project** (press **F7** or go to **Project → Build Target**).  
+4. **Flash the MCU**:  
+   - Connect your **SWD debugger** (e.g., ST-Link, J-Link).  
+   - Select the correct target device.  
+   - Program the generated `.hex` or `.bin` file into Flash memory.  
+
+> 💡 **Note:** For CMSIS device headers, include the **Puya-provided pack** (available from [py32.org](https://py32.org)).
 
 ---
 
+## 🧩 Converting Keil Output to Binary (.bin) Format
+
+Keil µVision typically produces an `.axf` file (ARM Executable and Linkable Format).  
+To generate a raw binary file (`.bin`) suitable for flashing or bootloader use, the **fromelf.exe** tool (included with Keil) can be used to extract the binary image.
+
+### 📂 Default Location of `fromelf.exe`
+
+| Compiler | Default Path |
+|-----------|---------------|
+| **ARMClang** (recommended) | `C:\Keil_v5\ARM\ARMCLANG\Bin\fromelf.exe` |
+| **ARMCC** (legacy) | `C:\Keil_v5\ARM\ARMCC\bin\fromelf.exe` |
+
+> ⚠️ If Keil is installed in a different directory (e.g., `D:\Keil_v5\...`), adjust the path accordingly.
+
+---
+
+### 💻 General Command Format
+
+Run the following command in **Command Prompt** (`cmd.exe`) or **PowerShell** from the folder containing your `.axf` file:
+
+```bash
+"C:\Keil_v5\ARM\ARMCLANG\Bin\fromelf.exe" --bin <input.axf> --output <output.bin>
+```
+
+- <input.axf> — Path to your Keil output file (e.g., UART_RX_Interrupt.axf)
+- <output.bin> — Desired binary file name (e.g., UART_RX_Interrupt.bin)
+
+```bash
+"C:\Keil_v5\ARM\ARMCLANG\Bin\fromelf.exe" --bin UART_RX_Interrupt.axf --output UART_RX_Interrupt.bin
+```
+This command extracts the Flash memory image and produces a compact .bin file.
+
+
+## 🧭 Step-by-Step Tutorial
+**1. Build Your Project in Keil µVision**
+- Open your .uvprojx project file.
+- Build the project (F7 or Project → Build Target).
+- Find the generated .axf file — usually located in the Objects subdirectory:
+```bash
+C:\YourProject\Objects\UART_RX_Interrupt.axf
+```
+
+**2. Open Command Prompt**
+- Press Win + R, type cmd, and hit Enter.
+- Navigate to the folder containing your .axf file:
+```bash
+cd C:\YourProject\Objects
+```
+
+**3. Run the fromelf Command**
+- Execute the conversion command:
+```bash
+"C:\Keil_v5\ARM\ARMCLANG\Bin\fromelf.exe" --bin UART_RX_Interrupt.axf --output UART_RX_Interrupt.bin
+```
+- Press Enter to run it.
+- A new .bin file will be created in the same directory.
+
+
+---
+
+## Programming via UART ISP (puyaisp)
+
+The **puyaisp** tool provides a simple and cost-effective way to flash **PY32F002Axx** (and other **PY32F0xx** series) microcontrollers using the **built-in UART bootloader** over a **USB-to-Serial converter**.  
+This method eliminates the need for a dedicated debugger.
+
+**Prerequisites**
+
+- **Python 3.x** installed on your system  
+- A **USB-to-Serial converter** (e.g., **CP2102**, **FT232R**) with proper drivers installed  
+- Access to **BOOT0 (PF4)** and **nRST (PF2)** pins on your board  
+- A **`.bin` file** generated from your Keil project (see the previous section)
+
+**Installation**
+
+1. Open a **Command Prompt** or **Terminal**.  
+2. Install the tool and dependencies with:
+```bash
+   pip install puyaisp pyusb pyserial hid
+```
+
+**Hardware Connections**
+
+Connect your USB-to-Serial converter to the PY32F002Axx as shown below (using default USART1 pins — alternatives like PA9/PA10 or PA14/PA15 may also be used):
+
+```
+USB2SERIAL        PY32F0xx
++--------+      +-----------+
+|     RXD| <--- |PA2        |
+|     TXD| ---> |PA3        |
+|     VDD| ---> |VDD        |
+|     GND| ---> |GND        |
++--------+      +-----------+
+```
+ Power the board via VDD/GND from the converter or an external supply (1.7–5.5 V).
+
+
+**Entering Bootloader Mode**
+
+To access the factory UART bootloader, choose one of the following methods:
+
+**Method 1 – Power-On**
+
+1. Disconnect power from the board.
+2. Pull BOOT0 (PF4) high to VDD (or hold the BOOT button if available).
+3. Reconnect power.
+4. Release BOOT0.
+
+**Method 2 – Reset**
+
+1. Keep power connected.
+2. Pull BOOT0 high.
+3. Briefly pull nRST (PF2) low to GND (or press and release the RESET button while holding BOOT).
+4. Release BOOT0.
+
+The MCU should now be in bootloader mode (no user code running).
+
+
+## Step-by-Step Flashing Tutorial
+**1. Prepare the Binary**
+
+Ensure your .bin file is ready (e.g., UART_Interrupt.bin) and note its full path.
+
+**2. Connect Hardware**
+
+Wire the USB-to-Serial converter as described above and plug it into your computer.
+
+**3. Enter Bootloader Mode**
+
+Use one of the methods listed above to activate the bootloader.
+
+**4. Run the Command**
+
+Open a terminal in the directory containing your .bin file and execute:
+
+```bash
+puyaisp -f UART_RX_Interrupt.bin
+```
+This command erases the Flash, writes the binary, and verifies the data.
+
+
+**Additional Options**
+
+| **Option** | **Description** |
+|-------------|-----------------|
+| `-u` | Unlock the chip (remove read protection) |
+| `-l` | Lock the chip (set read protection) |
+| `-e` | Perform chip erase only |
+| `-o` | Reset option bytes |
+| `-G` | Configure nRST as GPIO |
+| `-R` | Configure nRST as RESET (default) |
+| `-h` | Show help menu |
+
+---
+
+**Example (Unlock + Erase + Flash)**
+
+```bash
+puyaisp -u -e -f UART_Interrupt.bin
+```
+
+**Exit Bootloader**
+
+After flashing, reset the MCU (briefly pull nRST low) or power-cycle the board to start running the new firmware.
+
+
+**Tips**
+
+- **If the tool fails to detect the MCU:**
+    - Double-check wiring (TX ↔ RX swapped correctly)
+    - Verify baud rate (default: 115200)
+    - Ensure the MCU entered bootloader mode
+
+- **The tool supports all PY32F0xx devices (including PY32F002Axx)**
+
+- **Source: [puyaisp on PyPI](https://pypi.org/project/puyaisp/)
+ and [GitHub Repository](https://github.com/MohMahdiKolahi/puya-isp)**
+ 
+
+---
 ## 📥 Cloning the Repository
 To get a copy of the project on your computer, follow these steps:
 
