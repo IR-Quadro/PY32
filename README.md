@@ -151,7 +151,7 @@ This method eliminates the need for a dedicated debugger.
 
 - **Python 3.x** installed on your system  
 - A **USB-to-Serial converter** (e.g., **CP2102**, **FT232R**) with proper drivers installed  
-- Access to **BOOT0 (PF4)** and **nRST (PF2)** pins on your board  
+- Access to **BOOT0 (PB6)** and **nRST (PF2)** pins on your board  
 - A **`.bin` file** generated from your Keil project (see the previous section)
 
 **Installation**
@@ -185,7 +185,7 @@ To access the factory UART bootloader, choose one of the following methods:
 **Method 1 – Power-On**
 
 1. Disconnect power from the board.
-2. Pull BOOT0 (PF4) high to VDD (or hold the BOOT button if available).
+2. Pull BOOT0 (PB6) high to VDD (or hold the BOOT button if available).
 3. Reconnect power.
 4. Release BOOT0.
 
@@ -202,7 +202,7 @@ The MCU should now be in bootloader mode (no user code running).
 ## Step-by-Step Flashing Tutorial
 **1. Prepare the Binary**
 
-Ensure your .bin file is ready (e.g., UART_Interrupt.bin) and note its full path.
+Ensure your .bin file is ready (e.g., UART_RX_Interrupt.bin) and note its full path.
 
 **2. Connect Hardware**
 
@@ -239,7 +239,7 @@ This command erases the Flash, writes the binary, and verifies the data.
 **Example (Unlock + Erase + Flash)**
 
 ```bash
-puyaisp -u -e -f UART_Interrupt.bin
+puyaisp -u -e -f UART_RX_Interrupt.bin
 ```
 
 **Exit Bootloader**
