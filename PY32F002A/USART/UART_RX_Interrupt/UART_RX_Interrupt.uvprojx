@@ -49,7 +49,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>UART_Interrupt</OutputName>
+          <OutputName>UART_RX_Interrupt</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -398,11 +398,6 @@
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart old code.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\uart old code.txt</FilePath>
             </File>
             <File>
               <FileName>gpio.h</FileName>

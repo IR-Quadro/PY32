@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'UART_Interrupt' 
+ * Project: 'UART_RX_Interrupt' 
  * Target:  'Target 1' 
  */
 
