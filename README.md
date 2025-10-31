@@ -67,7 +67,7 @@ Ensure your setup supports 1.7–5.5 V operation and provides stable power (VDD/
 
 ## 🔨 General Build & Flash Instructions
 
-### 🧱 Building and Flashing from Keil µVision
+###  Building and Flashing from Keil µVision
 
 1. **Open the project file** (`.uvprojx`) in **Keil µVision 5**.  
 2. Go to **Project → Options for Target…**  
@@ -82,7 +82,7 @@ Ensure your setup supports 1.7–5.5 V operation and provides stable power (VDD/
 
 ---
 
-## 🧩 Converting Keil Output to Binary (.bin) Format
+##  Converting Keil Output to Binary (.bin) Format
 
 Keil µVision typically produces an `.axf` file (ARM Executable and Linkable Format).  
 To generate a raw binary file (`.bin`) suitable for flashing or bootloader use, the **fromelf.exe** tool (included with Keil) can be used to extract the binary image.
@@ -115,7 +115,7 @@ Run the following command in **Command Prompt** (`cmd.exe`) or **PowerShell** fr
 This command extracts the Flash memory image and produces a compact .bin file.
 
 
-## 🧭 Step-by-Step Tutorial
+##  Step-by-Step Tutorial
 **1. Build Your Project in Keil µVision**
 - Open your .uvprojx project file.
 - Build the project (F7 or Project → Build Target).
@@ -258,7 +258,7 @@ After flashing, reset the MCU (briefly pull nRST low) or power-cycle the board t
 
 - **Source: [puyaisp on PyPI](https://pypi.org/project/puyaisp/)
  and [GitHub Repository](https://github.com/MohMahdiKolahi/puya-isp)**
- 
+
 
 ---
 ## 📥 Cloning the Repository
