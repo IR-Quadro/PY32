@@ -177,7 +177,7 @@ USB2SERIAL        PY32F0xx
 ```
  Power the board via VDD/GND from the converter or an external supply (1.7–5.5 V).
 
-
+---
 **Entering Bootloader Mode**
 
 To access the factory UART bootloader, choose one of the following methods:
