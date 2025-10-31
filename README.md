@@ -46,7 +46,7 @@ USB2SERIAL        PY32F0xx
 
 
 ##  Example Serial Output
-![Termina](images/Terminal.png)
+![Termina](Images/Terminal.png)
 
 
 ---
@@ -62,7 +62,7 @@ USB2SERIAL        PY32F0xx
 1. Open `project.uvprojx` in Keil µVision.
 2. Go to **Project → Options for Target…**.  
 In the **Linker** tab, check the option **"Use Memory Layout from Target Dialog"**
-![Help](images/Keil-Option-Linker-MemoryLayout.png)
+![Help](Images/Keil-Option-Linker-MemoryLayout.png)
 
 3. Click Build (F7) to compile.
 
