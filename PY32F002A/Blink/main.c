@@ -19,12 +19,35 @@ int main (void)
   */
 	SysTick_Config(SystemCoreClock / 1000);
 	
+	
+	/* ----- GPIO Configuration for PA2 ----- */
+	
+	/* 1. Enable Peripheral Clock for GPIOA Port */
+	RCC->IOPENR |= RCC_IOPENR_GPIOAEN;
+		
+  /* 2. Set PA2 Mode to General Purpose Output (01) */
+	GPIOA->MODER &= ~GPIO_MODER_MODE2_Msk;	
+	GPIOA->MODER |=  GPIO_MODER_MODE2_0;		
+		
+	/* 3. Set PA2 Output Type to Push-Pull (0) */
+	GPIOA->OTYPER &= ~GPIO_OTYPER_OT2_Msk;
+	
+	/* 4. Set PA2 Output Speed to Low Speed (01) */
+	GPIOA->OSPEEDR &= ~GPIO_OSPEEDR_OSPEED2_Msk;
+	GPIOA->OSPEEDR |=  GPIO_OSPEEDR_OSPEED2_0;
+	
+	
 	while(1)
 	{
 		
 	 /* Main loop
     * Application code can be placed here
     */
+		
+		GPIOA->BSRR = GPIO_BSRR_BS2;		
+		delay_ms(500);
+		GPIOA->BSRR = GPIO_BSRR_BR2;		
+		delay_ms(500);
 		
 	}
 }

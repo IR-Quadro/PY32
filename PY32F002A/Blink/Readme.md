@@ -1,47 +1,51 @@
-# Session 01: System Time Base (SysTick)
-In this session, we implement a precise Time Base using the ARM® Cortex®-M0+ SysTick timer. This is the first step toward creating a "Blink" project, as it provides the necessary timing for periodic tasks.
-
-
+# Session 01: LED Blink (Register-Based)
+This project demonstrates the complete process of blinking an LED on the PY32F002A using bare-metal register access. It combines the SysTick timer for precise delays and GPIO configuration for hardware control.
 
 ## 📝 Overview
-Instead of using inaccurate software loops, we utilize the internal 24-bit SysTick counter. This allows the MCU to increment a global counter every 1 millisecond, providing a reliable reference for the ```delay_ms()``` function.
+To blink an LED without using high-level libraries (HAL/LL), we must manually communicate with the ARM® Cortex®-M0+ core and the MCU's peripheral bus. This example targets PA2 (Port A, Pin 2).
 
 
+### The Three-Step Hardware Process:
+1. **Clock Gating:** Enable the power for GPIO Port A via the **RCC** (Reset and Clock Control).
+2. **Pin Configuration:** Set the pin mode, output type, and speed via **GPIO Registers**.
+3. **Data Control:** Manipulate the pin state using the **BSRR** (Bit Set/Reset Register).
 
-## 🛠️ Implementation Details
 
-**1. SysTick Configuration**
+## 🛠️ Register Breakdown
+**1. Enabling the Clock** (```RCC->IOPENR```)
 
-The ```SysTick_Config()``` function (from the CMSIS header) sets up the timer's reload value and enables the interrupt.
-
-- **Formula:** ```SystemCoreClock / 1000```
-- **Result:** The ```SysTick_Handler``` is triggered exactly every 1ms (at 1kHz).
- 
-<br>
-
-**2. The Tick Counter**
-
-We use a ```volatile``` variable to ensure the compiler doesn't optimize out the memory access, as this variable is modified inside an Interrupt Service Routine (ISR).
-
-```C
-volatile uint32_t msTick = 0;
+In ARM microcontrollers, peripherals are disabled by default to save power. We must enable the clock for Port A:
+``` C
+RCC->IOPENR |= RCC_IOPENR_GPIOAEN;
 ```
 
-<br>
+**2. GPIO Configuration**
+We configure **PA2** by modifying the following registers:
 
-**3. The Delay Logic**
+- **MODER (Mode Register):** Set to ```01``` for General Purpose Output.
 
-The ```delay_ms``` function implements a blocking delay. It captures the current state of ```msTick``` and loops until the target duration has elapsed.
+- **OTYPER (Output Type):** Set to ```0``` for Push-Pull (standard for LEDs).
 
-
-## 🔍 Code Structure
-- ```main.c```: Contains the system initialization and the main loop.
-
-- ```SysTick_Handler()```: The interrupt routine that keeps track of time.
-
-- ```delay_ms()```: The user-facing function for timing control.
+- **OSPEEDR (Speed Register):** Set to ```01``` for Low Speed to reduce EMI/noise.
 
 
+**3. Bit Manipulation (```GPIOA->BSRR```)**
 
-## 🎯 Next Step
-In the next session, we will initialize the **RCC (Reset and Clock Control)** for GPIO peripherals and configure a pin as an **Output** to finally see the LED blink using the delay function we built today.
+Instead of using the ```ODR``` (Output Data Register), we use the BSRR (Bit Set/Reset Register).
+
+- **Atomic Access:** BSRR allows you to set or reset a pin in a single instruction without affecting other pins on the same port, making it faster and safer than read-modify-write operations.
+
+```C
+GPIOA->BSRR = GPIO_BSRR_BS2; // Set PA2 High
+GPIOA->BSRR = GPIO_BSRR_BR2; // Reset PA2 Low
+```
+
+
+## 🚀 Final Logic
+The ```while(1)``` loop now performs the following:
+
+1. Set PA2 High (LED ON).
+2. Wait 500ms using the SysTick-based ```delay_ms```.
+3. Set PA2 Low (LED OFF).
+4. Wait 500ms.
+
