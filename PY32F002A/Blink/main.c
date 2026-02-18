@@ -37,6 +37,20 @@ int main (void)
 	GPIOA->OSPEEDR |=  GPIO_OSPEEDR_OSPEED2_0;
 	
 	
+	
+	/* ----- GPIO Configuration for PB0 ----- */
+	
+	/* 1. Enable Peripheral Clock for GPIOB Port */
+	RCC->IOPENR |= RCC_IOPENR_GPIOBEN;
+	
+	/* 2. Set PB0 Mode to Input mode (00) */
+	GPIOB->MODER &= ~GPIO_MODER_MODE0_Msk;
+	
+	/* 3. Enable Pull-Up for PB0 */
+	GPIOB->PUPDR &= ~GPIO_PUPDR_PUPD0_Msk;
+	GPIOB->PUPDR |=  GPIO_PUPDR_PUPD0_0;
+	
+	
 	while(1)
 	{
 		
@@ -44,11 +58,14 @@ int main (void)
     * Application code can be placed here
     */
 		
-		GPIOA->BSRR = GPIO_BSRR_BS2;		
-		delay_ms(500);
-		GPIOA->BSRR = GPIO_BSRR_BR2;		
-		delay_ms(500);
-		
+		if((GPIOB->IDR & GPIO_IDR_ID0) == 0)
+		{
+			GPIOA->BSRR = GPIO_BSRR_BS2;		
+			delay_ms(50);
+			GPIOA->BSRR = GPIO_BSRR_BR2;		
+			delay_ms(50);
+		}
+			
 	}
 }
 
