@@ -28,30 +28,27 @@ Projects are organized by MCU series and peripheral functionality:
 
  Example
    ├── PY32F002A
-   │   ├── Blink         # GPIO Input/Output
-   │   ├── ...           # Coming soon
-   │   ├── ...           # Coming soon
-   │   ├── ...           # Coming soon
-   │   └── ...           # Coming soon
+   │   ├── GPIO_Input_Output        # LED Control via Button
+   │   ├── ...                      # Coming soon
+   │   ├── ...                      # Coming soon
+   │   ├── ...                      # Coming soon
+   │   └── ...                      # Coming soon
    │
    └───────────────────────────────────────────────────────
    |             👇 Maybe later / Planned 👇
    └───────────────────────────────────────────────────────
    ├── PY32Fxxx
-   |   ├── xxx
-   │   
    └── PY32Fxxx
-       ├── xxx
        
 ```
 
 ## 🛠️ Getting Started
 **Prerequisites**
-- **IDE:** Keil µVision 5 (or any ARM-compatible toolchain).
+- **IDE:** Keil µVision 5
 
 - **Compiler:** ARMClang (Arm Compiler 6).
 
-- **Hardware:** PY32F002Axx development board + USB-to-TTL converter or SWD Debugger (J-Link).
+- **Hardware:** PY32F002Axx development board + USB-to-TTL converter or SWD Debugger (Daplink).
 
 
 ### How to Build
@@ -69,7 +66,7 @@ Projects are organized by MCU series and peripheral functionality:
 
 ### Flashing the Firmware 
 
-1. **SWD:** Use a J-Link directly via Keil.
+1. **SWD:** Use Daplink directly via Keil.
 
 2. **UART Bootloader:** Use the puyaisp Python tool to flash via a USB-to-TTL converter.
 
@@ -86,7 +83,7 @@ Projects are organized by MCU series and peripheral functionality:
 
 ## 📚 Resources & Community
 
-For detailed step-by-step tutorials on setting up the environment, advanced flashing techniques, and video demonstrations, visit our Telegram channel:
+For detailed step-by-step tutorials on setting up the environment, advanced flashing techniques, and video demonstrations, visit our Telegram channel
 
 [📢 Join our Telegram Channel](https://t.me/EleQuo)
  
