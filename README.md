@@ -1,6 +1,6 @@
 # PY32F002Axx Microcontroller Examples
 
-A collection of low-level, register-based C projects for the Puya Semiconductor PY32F002Axx series. This repository focuses on pure hardware interaction without the abstraction of HAL or LL libraries, making it an ideal resource for educational purposes and performance-critical applications.
+A collection of bare-metal C projects for the Puya PY32F002Axx series. This repository focuses on learning hardware internals through direct register access, avoiding HAL or LL libraries to better understand how the ARM Cortex-M0+ core interacts with its peripherals.
 
 
 ## 🚀 Key Features of PY32F002Axx
@@ -14,8 +14,8 @@ The PY32F002A is an ultra-affordable, high-performance 32-bit ARM® Cortex®-M0+
 
 - **Peripherals:**
     - 12-bit SAR ADC.
-    - Timers: 1x Advanced Control (TIM1), 1x General Purpose (TIM16), 1x -   Low-power (LPTIM).
-    - Comm: USART, SPI, I2C.
+    - Timers: 1x Advanced Control (TIM1), 1x General Purpose (TIM16), 1x Low-power (LPTIM).
+    - Comm: USART/UART, SPI, I2C.
     - Safety: Watchdog (IWDG), CRC engine, Clock Security System (CSS).
    
 <br>
@@ -26,7 +26,7 @@ Projects are organized by MCU series and peripheral functionality:
 
 ```
 
- Example
+Example
    ├── PY32F002A
    │   ├── GPIO_Input_Output        # LED Control via Button
    │   ├── ...                      # Coming soon
