@@ -19,8 +19,8 @@
 *.bak
 *.uvoptx.bak
 *.uvprojx.bak
-*.uvguix.* # Personal window layout (Ignore this!)
-*.uvgui.* # Older version layout
+*.uvguix.* 
+*.uvgui.* 
 *.scvd
 DebugConfig/
 Objects/
