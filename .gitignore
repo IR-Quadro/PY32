@@ -1,4 +1,4 @@
-# Build output
+# --- Build & Output Files (Safe to Ignore) ---
 *.axf
 *.elf
 *.hex
@@ -12,35 +12,30 @@
 *.htm
 *.html
 *.log
-
-# Keil-specific intermediate files
 *.d
 *.dep
-*.bak
-*.uvguix.*
-*.uvoptx
-*.uvgui.*
-*.uvopt
-*.uvproj
-*.uvprojx.bak
-*.uvoptx.bak
-*.scvd
 
-# Listings, Debug, and other outputs
+# --- Keil Intermediate & User-Specific Files ---
+*.bak
+*.uvoptx.bak
+*.uvprojx.bak
+*.uvguix.* # Personal window layout (Ignore this!)
+*.uvgui.* # Older version layout
+*.scvd
+DebugConfig/
 Objects/
 Listings/
-DebugConfig/
 
-# Temporary system files
+# --- Temporary & System Files ---
 Thumbs.db
 .DS_Store
 *.swp
-*.user
+*.user            
 *.workspace
 *.idea
 *.vscode
 
-# Optional: ignore any generated folder if you have simulation or Proteus files
+# --- Simulation ---
 *.pdsprj
 *.pdsbak
 *.dsn

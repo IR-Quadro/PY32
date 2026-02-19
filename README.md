@@ -28,7 +28,7 @@ Projects are organized by MCU series and peripheral functionality:
 
  Example
    ├── PY32F002A
-   │   ├── Blink         # Basic GPIO toggle
+   │   ├── Blink         # GPIO Input/Output
    │   ├── ...           # Coming soon
    │   ├── ...           # Coming soon
    │   ├── ...           # Coming soon
