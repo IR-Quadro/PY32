@@ -83,7 +83,7 @@ Projects are organized by MCU series and peripheral functionality:
 
 ## 📚 Resources & Community
 
-For detailed step-by-step tutorials on setting up the environment, advanced flashing techniques, and video demonstrations, visit our Telegram channel
+For detailed step-by-step tutorials on setting up the environment, advanced flashing techniques, and video demonstrations, visit our Telegram channel:
 
 [📢 Join our Telegram Channel](https://t.me/EleQuo)
  
