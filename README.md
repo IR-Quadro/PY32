@@ -29,7 +29,9 @@ Projects are organized by MCU series and peripheral functionality:
 Example
    ├── PY32F002A
    │   ├── GPIO_Input_Output        # LED Control via Button
-   │   ├── ...                      # Coming soon
+   │   ├── UART
+   |   |   ├── 01_Printf_Polling  
+   |   |   └── ...                 
    │   ├── ...                      # Coming soon
    │   ├── ...                      # Coming soon
    │   └── ...                      # Coming soon
